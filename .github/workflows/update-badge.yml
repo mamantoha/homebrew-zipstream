@@ -1,0 +1,33 @@
+name: Update Homebrew Badge
+
+on:
+  push:
+    paths:
+      - 'Formula/*.rb'
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract version from formula
+        id: extract_version
+        run: |
+          FORMULA=$(find Formula -name "*.rb")
+          VERSION=$(grep -E 'url .*zipstream.*' "$FORMULA" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      - name: Update badge.json
+        run: |
+          jq --arg version "$VERSION" '.message = $version' badge.json > badge.tmp.json
+          mv badge.tmp.json badge.json
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add badge.json
+          git commit -m "Update badge to $VERSION" || echo "No changes"
+          git push
