@@ -1,8 +1,8 @@
 class Zipstream < Formula
   desc "Easily share files and directories over the network"
   homepage "https://github.com/mamantoha/zipstream"
-  url "https://github.com/mamantoha/zipstream/archive/refs/tags/v0.23.20.tar.gz"
-  sha256 "ea1e664ee4a5be8abe1db16f1a7498a009c7c375270c9884a7312a08bc5dae1e"
+  url "https://github.com/mamantoha/zipstream/archive/refs/tags/v0.24.0.tar.gz"
+  sha256 "665729207ba8c3c2d15bed166fc97f0215a0cfc2ca6903c41c9ac0c45c1a1511"
   license "MIT"
 
   depends_on "crystal"
